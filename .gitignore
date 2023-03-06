@@ -27,4 +27,7 @@ hs_err_pid*
 /target/
 
 /src/main/resources/static/
+/src/main/resources/application-local.yml
+/src/main/resources/application-jar.yml
 certificates
+/snap/

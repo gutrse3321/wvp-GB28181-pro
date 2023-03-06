@@ -128,33 +128,34 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         // 设置允许添加静态文件
-        http.headers().contentTypeOptions().disable();
-        http.authorizeRequests()
-                // 放行接口
-                .antMatchers("/api/user/login","/index/hook/**").permitAll()
-                // 除上面外的所有请求全部需要鉴权认证
-                .anyRequest().authenticated()
-                // 异常处理(权限拒绝、登录失效等)
-                .and().exceptionHandling()
-                //匿名用户访问无权限资源时的异常处理
-                .authenticationEntryPoint(anonymousAuthenticationEntryPoint)
-//                .accessDeniedHandler(accessDeniedHandler)//登录用户没有权限访问资源
-                // 登入 允许所有用户
-                .and().formLogin().permitAll()
-                //登录成功处理逻辑
-                .successHandler(loginSuccessHandler)
-                //登录失败处理逻辑
-                .failureHandler(loginFailureHandler)
-                // 登出
-                .and().logout().logoutUrl("/api/user/logout").permitAll()
-                //登出成功处理逻辑
-                .logoutSuccessHandler(logoutHandler)
-                .deleteCookies("JSESSIONID")
-                // 会话管理
-//                .and().sessionManagement().invalidSessionStrategy(invalidSessionHandler) // 超时处理
-//                .maximumSessions(1)//同一账号同时登录最大用户数
-//                .expiredSessionStrategy(sessionInformationExpiredHandler) // 顶号处理
-        ;
+//        http.headers().contentTypeOptions().disable();
+//        http.authorizeRequests()
+//                // 放行接口
+////                .antMatchers("/api/user/login","/index/hook/**").permitAll()
+//                .antMatchers("**/*").permitAll()
+//                // 除上面外的所有请求全部需要鉴权认证
+//                .anyRequest().authenticated()
+//                // 异常处理(权限拒绝、登录失效等)
+//                .and().exceptionHandling()
+//                //匿名用户访问无权限资源时的异常处理
+//                .authenticationEntryPoint(anonymousAuthenticationEntryPoint)
+////                .accessDeniedHandler(accessDeniedHandler)//登录用户没有权限访问资源
+//                // 登入 允许所有用户
+//                .and().formLogin().permitAll()
+//                //登录成功处理逻辑
+//                .successHandler(loginSuccessHandler)
+//                //登录失败处理逻辑
+//                .failureHandler(loginFailureHandler)
+//                // 登出
+//                .and().logout().logoutUrl("/api/user/logout").permitAll()
+//                //登出成功处理逻辑
+//                .logoutSuccessHandler(logoutHandler)
+//                .deleteCookies("JSESSIONID")
+//                // 会话管理
+////                .and().sessionManagement().invalidSessionStrategy(invalidSessionHandler) // 超时处理
+////                .maximumSessions(1)//同一账号同时登录最大用户数
+////                .expiredSessionStrategy(sessionInformationExpiredHandler) // 顶号处理
+//        ;
 
     }
 
