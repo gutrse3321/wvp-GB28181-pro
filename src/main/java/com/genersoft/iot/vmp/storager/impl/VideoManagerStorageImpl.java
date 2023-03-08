@@ -350,17 +350,26 @@ public class VideoManagerStorageImpl implements IVideoManagerStorage {
 	}
 
 	@Override
-	public PageInfo queryChannelsByDeviceId(String deviceId, String query, Boolean hasSubChannel, Boolean online, Boolean catalogUnderDevice, int page, int count) {
+	public PageInfo queryChannelsByDeviceId(String deviceId,
+											String query,
+											Boolean hasSubChannel,
+											Boolean online,
+											Boolean catalogUnderDevice,
+											String mainNodeId,
+											int page,
+											int count) {
 		// 获取到所有正在播放的流
 		PageHelper.startPage(page, count);
 		List<DeviceChannel> all;
 		if (catalogUnderDevice != null && catalogUnderDevice) {
-			all = deviceChannelMapper.queryChannels(deviceId, deviceId, query, hasSubChannel, online,null);
+			all = deviceChannelMapper.queryChannels(deviceId, deviceId, query, hasSubChannel, mainNodeId, online,null);
 			// 海康设备的parentId是SIP id
-			List<DeviceChannel> deviceChannels = deviceChannelMapper.queryChannels(deviceId, sipConfig.getId(), query, hasSubChannel, online,null);
+			List<DeviceChannel> deviceChannels = deviceChannelMapper.queryChannels(deviceId, sipConfig.getId(), query,
+					hasSubChannel, mainNodeId, online,null);
 			all.addAll(deviceChannels);
 		}else {
-			all = deviceChannelMapper.queryChannels(deviceId, null, query, hasSubChannel, online,null);
+			all = deviceChannelMapper.queryChannels(deviceId, null, query, hasSubChannel, mainNodeId,
+					online,null);
 		}
 		return new PageInfo<>(all);
 	}
@@ -373,13 +382,13 @@ public class VideoManagerStorageImpl implements IVideoManagerStorage {
 
 	@Override
 	public List<DeviceChannel> queryChannelsByDeviceId(String deviceId,Boolean online,List<String> channelIds) {
-		return deviceChannelMapper.queryChannels(deviceId, null,null, null, online,channelIds);
+		return deviceChannelMapper.queryChannels(deviceId, null,null, null, null, online,channelIds);
 	}
 
 	@Override
 	public PageInfo<DeviceChannel> querySubChannels(String deviceId, String parentChannelId, String query, Boolean hasSubChannel, Boolean online, int page, int count) {
 		PageHelper.startPage(page, count);
-		List<DeviceChannel> all = deviceChannelMapper.queryChannels(deviceId, parentChannelId, query, hasSubChannel, online,null);
+		List<DeviceChannel> all = deviceChannelMapper.queryChannels(deviceId, parentChannelId, query, hasSubChannel, null, online,null);
 		return new PageInfo<>(all);
 	}
 

@@ -409,7 +409,8 @@ public class DeviceServiceImpl implements IDeviceService {
             if (parentId.length() < 14 ) {
                 return null;
             }
-            List<DeviceChannel> deviceChannels = deviceChannelMapper.queryChannels(deviceId, parentId, null, null, null,null);
+            List<DeviceChannel> deviceChannels = deviceChannelMapper.queryChannels(deviceId, parentId, null,
+                    null, null, null,null);
             List<BaseTree<DeviceChannel>> trees = transportChannelsToTree(deviceChannels, parentId);
             return trees;
         }
@@ -454,7 +455,8 @@ public class DeviceServiceImpl implements IDeviceService {
             if (parentId.length() < 14 ) {
                 return null;
             }
-            List<DeviceChannel> deviceChannels = deviceChannelMapper.queryChannels(deviceId, parentId, null, null, null,null);
+            List<DeviceChannel> deviceChannels = deviceChannelMapper.queryChannels(deviceId, parentId, null,
+                    null, null, null,null);
             return deviceChannels;
         }
 
@@ -518,7 +520,8 @@ public class DeviceServiceImpl implements IDeviceService {
                 }
             }else {
                 if (haveChannel) {
-                    List<DeviceChannel> deviceChannels = deviceChannelMapper.queryChannels(deviceId, null, null, null, null,null);
+                    List<DeviceChannel> deviceChannels = deviceChannelMapper.queryChannels(deviceId, null,
+                            null, null, null, null,null);
                     if (deviceChannels != null && deviceChannels.size() > 0) {
                         result.addAll(deviceChannels);
                     }

@@ -64,6 +64,7 @@ public class ZLMRESTfulUtils {
         JSONObject responseJSON = new JSONObject();
         //-2自定义流媒体 调用错误码
         responseJSON.put("code",-2);
+        responseJSON.put("url", url);
         responseJSON.put("msg","流媒体调用失败");
 
         FormBody.Builder builder = new FormBody.Builder();
@@ -238,6 +239,7 @@ public class ZLMRESTfulUtils {
     public JSONObject getRtpInfo(MediaServerItem mediaServerItem, String stream_id){
         Map<String, Object> param = new HashMap<>();
         param.put("stream_id",stream_id);
+        logger.info("[获取Rtp信息ZLM]getRtpInfo stream_id: {}", stream_id);
         return sendPost(mediaServerItem, "getRtpInfo",param, null);
     }
 

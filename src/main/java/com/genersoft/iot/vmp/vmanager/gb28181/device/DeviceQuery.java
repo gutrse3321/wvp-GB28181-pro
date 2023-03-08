@@ -124,16 +124,18 @@ public class DeviceQuery {
 	@Parameter(name = "channelType", description = "设备/子目录-> false/true")
 	@Parameter(name = "catalogUnderDevice", description = "是否直属与设备的目录")
 	public PageInfo<DeviceChannel> channels(@PathVariable String deviceId,
-											   int page, int count,
-											   @RequestParam(required = false) String query,
-											   @RequestParam(required = false) Boolean online,
-											   @RequestParam(required = false) Boolean channelType,
-											   @RequestParam(required = false) Boolean catalogUnderDevice) {
+										    int page, int count,
+										    @RequestParam(required = false) String query,
+										    @RequestParam(required = false) Boolean online,
+										    @RequestParam(required = false) Boolean channelType,
+										    @RequestParam(required = false) Boolean catalogUnderDevice,
+											@RequestParam(required = false) String mainNodeId) {
 		if (ObjectUtils.isEmpty(query)) {
 			query = null;
 		}
 
-		return storager.queryChannelsByDeviceId(deviceId, query, channelType, online, catalogUnderDevice, page, count);
+		return storager.queryChannelsByDeviceId(deviceId, query, channelType, online, catalogUnderDevice, mainNodeId,
+				page, count);
 	}
 
 	/**

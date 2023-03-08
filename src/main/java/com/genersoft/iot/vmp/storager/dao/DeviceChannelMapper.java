@@ -69,20 +69,27 @@ public interface DeviceChannelMapper {
             "dc.* " +
             "from " +
             "device_channel dc " +
+            " <if test='mainNodeId != null'>left join static_node_code nc on nc.node_id = dc.channelId</if> " +
             "WHERE " +
             "dc.deviceId = #{deviceId} " +
-" <if test='query != null'> AND (dc.channelId LIKE concat('%',#{query},'%') OR dc.name LIKE concat('%',#{query},'%') OR dc.name LIKE concat('%',#{query},'%'))</if> " +
+            " <if test='query != null'> AND (dc.channelId LIKE concat('%',#{query},'%') OR dc.name LIKE concat('%',#{query},'%') OR dc.name LIKE concat('%',#{query},'%'))</if> " +
             " <if test='parentChannelId != null'> AND (dc.parentId=#{parentChannelId} OR dc.civilCode = #{parentChannelId}) </if> " +
             " <if test='online == true' > AND dc.status=1</if>" +
             " <if test='online == false' > AND dc.status=0</if>" +
             " <if test='hasSubChannel == true' >  AND dc.subCount > 0 </if>" +
             " <if test='hasSubChannel == false' >  AND dc.subCount = 0 </if>" +
-            "<if test='channelIds != null'> AND dc.channelId in <foreach item='item' index='index' collection='channelIds' open='(' separator=',' close=')'>" +
+            " <if test='mainNodeId != null'>and nc.parent_node_id = #{mainNodeId}</if>" +
+            " <if test='channelIds != null'> AND dc.channelId in <foreach item='item' index='index' collection='channelIds' open='(' separator=',' close=')'>" +
             "#{item} " +
             "</foreach> </if>" +
             "ORDER BY dc.channelId " +
             " </script>"})
-    List<DeviceChannel> queryChannels(String deviceId, String parentChannelId, String query, Boolean hasSubChannel, Boolean online,List<String> channelIds);
+    List<DeviceChannel> queryChannels(String deviceId,
+                                      String parentChannelId,
+                                      String query,
+                                      Boolean hasSubChannel,
+                                      String mainNodeId,
+                                      Boolean online,List<String> channelIds);
 
     @Select("SELECT * FROM device_channel WHERE deviceId=#{deviceId} AND channelId=#{channelId}")
     DeviceChannel queryChannel(String deviceId, String channelId);
